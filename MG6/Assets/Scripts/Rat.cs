@@ -1,9 +1,10 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Rat : MonoBehaviour
 {
     [SerializeField] private float _shrinkAmount;
-    [SerializeField] private float _spawnAmount;
+    [SerializeField] private float _spawnAmount = 5;
     [SerializeField] private GameObject _ratPrefab;
     [SerializeField] private SpriteRenderer _explosionPrefab;
 
@@ -14,6 +15,15 @@ public class Rat : MonoBehaviour
         Color.blue
     };
     private int _colorIndex;
+
+    
+    private void ColorSwap()
+    {
+        if (_colorIndex > 2)
+        {
+            _colorIndex = 0;
+        }
+    }
 
     // ------------------------------------------------------------------------
     private void OnCollisionEnter2D(Collision2D collision)
@@ -33,7 +43,23 @@ public class Rat : MonoBehaviour
         // Each time the Rat is kicked, the explosion should be a different
         //      color: first yellow, then red, then blue, then looping back
         //      around to yellow, etc.
+        string tag = collision.gameObject.tag;
+        if (tag.Equals("Attack"))
+        {
+            
+            for (int i = 0; i < _spawnAmount; i++)
+            {
+                SpawnSmallRat();
+            }
+            
+            Vector3 scale = transform.localScale;
+            scale *= _shrinkAmount;
+            transform.localScale = scale;
 
+            SpawnExplosion(_colors[_colorIndex]);
+            _colorIndex++;
+            ColorSwap();
+        }
 
         // STEP 2 -------------------------------------------------------------
     }
@@ -60,9 +86,9 @@ public class Rat : MonoBehaviour
         //      rotation correctly.
         // Your game should look exaclty like the finished example.
 
-        //float randomAngle = Random.Range(0, 360);
-        //Vector3 rotationAngles = new Vector3(0, randomAngle, 0);
-        //rat.transform.Rotate(rotationAngles);
+        float randomAngle = Random.Range(0, 360);
+        Vector3 rotationAngles = new Vector3(0, 0, randomAngle);
+        rat.transform.Rotate(rotationAngles);
 
         // STEP 3 -------------------------------------------------------------
     }
