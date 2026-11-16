@@ -1,3 +1,3 @@
 # MG6
 1.	If you write a for loop inside an Update method, the entire loop will complete before the update method finishes. Because of this, the game would lag as the Update is required to go through all of the code inside before it can execute again.
-2 . With the way I wrote to allow for the player to jump through the bottom a platform the player can phase through the side of a platform because the collider is turned off whenever the player jumps.
+2. With the way I wrote to allow for the player to jump through the bottom a platform the player can phase through the side of a platform because the collider is turned off whenever the player jumps.
